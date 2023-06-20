@@ -2,7 +2,7 @@ __package__
 
 
 class Vehicle(object):
-    def __init__(self, name, quantity, loadCapacity, new_vihicle, type_vihicle, modif_vihicle, lcc, Lk_normat, length, wigth):
+    def __init__(self, name, quantity, loadCapacity, new_vihicle, type_vihicle, modif_vihicle, lcc, Lk_normat, length, wigth, metod_keeping):
         self.name = name
         self.quantity = quantity
         self.loadCapacity = loadCapacity
@@ -13,3 +13,4 @@ class Vehicle(object):
         self.Lk_normat = Lk_normat
         self.length = length
         self.wigth = wigth
+        self.metod_keeping = metod_keeping

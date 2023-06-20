@@ -469,10 +469,16 @@ def find_k4_standart(day_km, table):
     return arr
 
 
-def find_k5_trud(weather, table):
-    for i in range(10):
-        if weather in (table[i+1][0].value.split(';')):
-            return float(table[i+1][4].value)
+def find_k5_trud(inp_arr, table):
+    res_arr = [i for i in range(len(inp_arr))]
+    for i in range(len(inp_arr)):
+        if inp_arr[i].metod_keeping == 'open':
+            res_arr[i] = 1
+        else:
+            res_arr[i] = 0.9
+    return res_arr
+    
+    
 
 
 def find_k5_sklad(category, table):
