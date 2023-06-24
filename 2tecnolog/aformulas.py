@@ -342,7 +342,7 @@ def find_k_1_standart(quantity_vehicle, table):
         temp_list = (table[i][0].value).split(';')
         if quantity_vehicle >= float(temp_list[0]) and quantity_vehicle < float(temp_list[1]):
             for j in range(4, 9):
-                arr.append(float(table[i-1][j].value))
+                arr.append(float(table[i][j].value))
 
     return arr
 

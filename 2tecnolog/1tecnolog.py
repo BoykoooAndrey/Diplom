@@ -52,14 +52,26 @@ kamaz_43118 = car.Vehicle("КАМАЗ-43118", 144, 10, 93,
 politrans = car.Vehicle("ПОЛИТРАНС-94163", 61, 40, 32,
                         'полуприцепы тяжеловозы', 'полуприцепы', 113, 250000, 15.130, 2.550, 'open')
 cars = [uaz_3163, kamaz_43502, kamaz_43118, politrans]
-
+P_proizvod_rab = 66
+#Бессмертный
+# MITSUBISHI_l200 = car.Vehicle("MITSUBISHI L-200", 22, 2.7, 14, 'автомобили легковые',
+#                        'автомобили и автобусы полноприводные', 140, 300000, 5.225, 1.815, 'close')
+# kamaz_43118 = car.Vehicle("КАМАЗ-43118", 117, 4, 102, 'автомобили грузовые',
+#                           'базовый автомобиль', 90, 300000, 8.835, 2.5, 'close')
+# ural_4320 = car.Vehicle("УРАЛ-4320", 91, 10, 60,
+#                           'автомобили грузовые', 'седельные тягачи', 118, 300000, 7.588, 2.5, 'open')
+# cab = car.Vehicle("САВ-931823", 61, 40, 42,
+#                         'полуприцепы тяжеловозы', 'полуприцепы', 130, 250000, 13.540, 2.54, 'open')
+# cars = [MITSUBISHI_l200, kamaz_43118, ural_4320, cab]
+# P_proizvod_rab = 51
 
 DAYS_JOB = 255
 category = 3
 weather = "холодные"
 all_quantity = 0
-P_proizvod_rab = 66
-F_sklad_vne_proizvod_korp = 0
+
+F_sklad_spisaniy_avto = 0
+F_sklad_kislorod = 0
 for i in cars:
     all_quantity += i.quantity
 LEN_CAR = len(cars)
@@ -378,6 +390,7 @@ def append_1_5_1(arr1, arr2):
 append_1_5_1(arr_headings_output_1, arr_value_output_1)
 
 t_EO = [i for i in range(LEN_CAR)]
+
 t_to1 = [i for i in range(LEN_CAR)]
 t_to2 = [i for i in range(LEN_CAR)]
 t_tr1000 = [i for i in range(LEN_CAR)]
@@ -398,6 +411,9 @@ T_D2_year = [i for i in range(LEN_CAR)]
 T_to1_year_all_corrected = [i for i in range(LEN_CAR)]
 T_to2_year_all_corrected = [i for i in range(LEN_CAR)]
 T_tr1000_year_all_corrected = [i for i in range(LEN_CAR)]
+
+
+
 
 for i in range(LEN_CAR):
     T_EO_year[i] = round(t_EO[i] * N_EO_smen_year_all[i], 2)
@@ -435,14 +451,22 @@ for i in range(LEN_CAR):
         
         arr1.append(f't_tr_coorect{i}')
         arr2.append(f"({fractions_post[i][0][2]}+{fractions_post[i][1][2]})={round(T_tr1000_year_all_corrected[i], 2)}")
-    append_Tttt(arr_headings_output_1, arr_value_output_1)
+
+    append_Tttt(arr_headings_output_2, arr_value_output_2)
 T_EO_year_all = sum(T_EO_year)
 T_to1_year_all = sum(T_to1_year_all_corrected)
 T_to2_year_all = sum(T_to2_year_all_corrected)
 T_tr1000_year_all = sum(T_tr1000_year_all_corrected)
 T_D1_year_all = sum(T_D1_year)
 T_D2_year_all = sum(T_D2_year)
-T_vsp = (T_EO_year_all + T_to1_year_all + T_to2_year_all + T_tr1000_year_all) * 0.2
+T_vsp = round((T_EO_year_all + T_to1_year_all + T_to2_year_all + T_tr1000_year_all) * 0.2, 2)
+
+t_to1_corrected = [0 for i in range(LEN_CAR)]
+t_to2_corrected = [0 for i in range(LEN_CAR)]
+for i in range(LEN_CAR):
+    t_to1_corrected[i] = round(T_to1_year_all_corrected[i] / N_1_year_all[i], 2)
+    t_to2_corrected[i] = round(T_to2_year_all_corrected[i] / N_2_year_all[i], 2)
+
 
 
 def append_2(arr1, arr2):
@@ -458,13 +482,9 @@ def append_2(arr1, arr2):
     for i in range(LEN_CAR):
         arr1.append(f't_tr1000{i}')
         arr2.append(t_tr1000[i])
-
-
     for i in range(LEN_CAR):
         arr1.append(f'T_EO_year{i}')
         arr2.append(T_EO_year[i])
-
-
     for i in range(LEN_CAR):
         arr1.append(f'T_to1_year{i}')
         arr2.append(T_to1_year[i])
@@ -474,6 +494,62 @@ def append_2(arr1, arr2):
     for i in range(LEN_CAR):
         arr1.append(f'T_tr1000_year{i}')
         arr2.append(T_tr1000_year[i])
+
+    arr1.append(f'T_EO_year_all')
+    arr2.append(T_EO_year_all)
+    arr1.append(f'T_D1_year_all')
+    arr2.append(T_D1_year_all)
+    arr1.append(f'T_D2_year_all')
+    arr2.append(T_D2_year_all)
+    arr1.append(f'T_to1_year_all')
+    arr2.append(T_to1_year_all)
+    arr1.append(f'T_to2_year_all')
+    arr2.append(T_to2_year_all)
+    arr1.append(f'T_tr1000_year_all')
+    arr2.append(T_tr1000_year_all)
+
+append_2(arr_headings_output_1, arr_value_output_1)
+
+def append_correcrt_trud(arr1, arr2):
+    for i in range(LEN_CAR):
+        arr1.append(f'T_to1_year{i}')
+        arr2.append(T_to1_year[i])
+    for i in range(LEN_CAR):
+        arr1.append(f'T_to2_year{i}')
+        arr2.append(T_to2_year[i])
+    for i in range(LEN_CAR):
+        arr1.append(f'T_tr1000_year{i}')
+        arr2.append(T_tr1000_year[i])
+
+    for i in range(LEN_CAR):
+        arr1.append(f'T_to1_year_all_corrected{i}')
+        arr2.append(T_to1_year_all_corrected[i])
+    for i in range(LEN_CAR):
+        arr1.append(f'T_to2_year_all_corrected{i}')
+        arr2.append(T_to2_year_all_corrected[i])
+    
+    for i in range(LEN_CAR):
+        arr1.append(f'N_1_year_all{i}')
+        arr2.append(N_1_year_all[i])
+    for i in range(LEN_CAR):
+        arr1.append(f'N_2_year_all{i}')
+        arr2.append(N_2_year_all[i])
+
+    for i in range(LEN_CAR):
+        arr1.append(f't_to1_correctedd{i}')
+        arr2.append(t_to1_corrected[i])
+    for i in range(LEN_CAR):
+        arr1.append(f't_to2_correctedd{i}')
+        arr2.append(t_to2_corrected[i])
+
+    for i in range(LEN_CAR):
+        arr1.append(f'T_D1_year{i}')
+        arr2.append(T_D1_year[i])
+    
+    for i in range(LEN_CAR):
+        arr1.append(f'T_D2_year{i}')
+        arr2.append(T_D2_year[i])
+
     arr1.append(f'T_EO_year_all')
     arr2.append(T_EO_year_all)
     arr1.append(f'T_D1_year_all')
@@ -488,12 +564,8 @@ def append_2(arr1, arr2):
     arr2.append(T_tr1000_year_all)
     arr1.append(f'T_vsp')
     arr2.append(T_vsp)
-append_2(arr_headings_output_1, arr_value_output_1)
-
-
+append_correcrt_trud(arr_headings_output_2, arr_value_output_2)
 # table 1.1 and 1.2
-
-
 
 def find_trud_post_and_uch(fractions):
     tmp_trud = 0
@@ -520,7 +592,7 @@ for i in range(LEN_CAR):
         arr1.append(f'N_1_day{i}')
         arr2.append(N_1_day[i])
         arr1.append(f't_to1_corrected{i}')
-        arr2.append(t_to1[i])
+        arr2.append(t_to1_corrected[i])
         arr1.append(f'ritm_to_1{i}')
         arr2.append(ritm_to_1)
         arr1.append(f'takt_to_1{i}')
@@ -532,7 +604,7 @@ for i in range(LEN_CAR):
         arr1.append(f'ritm_to_2{i}')
         arr2.append(ritm_to_2)
         arr1.append(f't_to2_corrected{i}')
-        arr2.append(t_to2[i])
+        arr2.append(t_to2_corrected[i])
         arr1.append(f'takt_to_2{i}')
         arr2.append(takt_to_2)
         arr1.append(f'X_to_2{i}')
@@ -540,7 +612,7 @@ for i in range(LEN_CAR):
     ritm_to_1 = round((60*modes_to_1[2]*modes_to_1[1])/N_1_day[i], 2)
     R_p_to_1 = 2
     time_peredviz_on_to = 2
-    takt_to_1 = round((60*t_to1[i]/R_p_to_1)+time_peredviz_on_to, 2)
+    takt_to_1 = round((60*t_to1_corrected[i]/R_p_to_1)+time_peredviz_on_to, 2)
     X_to_1 = round(takt_to_1/ritm_to_1)
     if X_to_1 == 0:
         X_to_1 = 1
@@ -551,7 +623,7 @@ for i in range(LEN_CAR):
     ritm_to_2 = round((60*modes_to_2[2]*modes_to_2[1])/N_2_day[i], 2)
     R_p_to_2 = 3
     n_to_2 = 0.98
-    takt_to_2 = round((60*t_to2[i]/R_p_to_2)+time_peredviz_on_to, 2)
+    takt_to_2 = round((60*t_to2_corrected[i]/R_p_to_2)+time_peredviz_on_to, 2)
     X_to_2 = round(takt_to_2/(ritm_to_2*n_to_2))
     if X_to_2 == 0:
         X_to_2 = 1
@@ -637,52 +709,86 @@ def append_3_2_15(arr1, arr2):
 append_3_2_15(arr_headings_output_2, arr_value_output_2)
 
 # EO
-N_y_for_EO = 40
-takt_EO_line = round(60/N_y_for_EO, 2)
-N_EO_line = round(60/takt_EO_line, 2)
-T_voz_EO = 3.3
-R_EO_line = round(60 * (T_voz_EO/(0.7 * N_EO_smen_day_sum)), 2)
-R_p_EO_line = 2
-m_EO_line = round(takt_EO_line/R_EO_line)
-if m_EO_line == 0:
-    m_EO_line = 1
+
 modes_EO = form.days_job_for_EO(DAYS_JOB, table_27)
 n_2_for_EO = form.find_n_2_for_EO(modes_EO[1], table_29)
-fi_for_EO = form.find_fi('EO', all_quantity, modes_EO[1], table_24)
-X_EO_line = round((T_EO_year_all*fi_for_EO) /
-                  (DAYS_JOB*modes_EO[2]*n_2_for_EO[0]*modes_EO[1]*R_p_EO_line))
-if X_EO_line == 0:
-    X_EO_line = 1
+tmp_for_EO = 0
 
+def append_3_2_16_1(arr1, arr2):
+        arr1.append(f'n_2_for_EO[0]')
+        arr2.append(n_2_for_EO[0])
+        arr1.append(f'modes_EO[2]')
+        arr2.append(modes_EO[2])
+        arr1.append(f'modes_EO[1]')
+        arr2.append(modes_EO[1])
+append_3_2_16_1(arr_headings_output_2, arr_value_output_2)
 
-def append_3_2_16(arr1, arr2):
-    arr1.append(f'N_EO_line')
-    arr2.append(N_EO_line)
-    arr1.append(f'N_y_for_EO')
-    arr2.append(N_y_for_EO)
-    arr1.append(f'takt_EO_line')
-    arr2.append(takt_EO_line)
-    arr1.append(f'R_EO_line')
-    arr2.append(R_EO_line)
-    arr1.append(f'm_EO_line')
-    arr2.append(m_EO_line)
-    arr1.append(f'T_voz_EO')
-    arr2.append(T_voz_EO)
-    arr1.append(f'T_EO_year_all')
-    arr2.append(T_EO_year_all)
-    arr1.append(f'n_2_for_EO[0]')
-    arr2.append(n_2_for_EO[0])
-    arr1.append(f'X_EO_line')
-    arr2.append(X_EO_line)
-    arr1.append(f'fi_for_EO')
-    arr2.append(fi_for_EO)
-    arr1.append(f'modes_EO[2]')
-    arr2.append(modes_EO[2])
-    arr1.append(f'modes_EO[1]')
-    arr2.append(modes_EO[1])
-    arr1.append(f'R_p_EO_line')
-    arr2.append(R_p_EO_line)
-append_3_2_16(arr_headings_output_2, arr_value_output_2)
+for i in range(2):
+    def append_3_2_16(arr1, arr2):
+        arr1.append(f'N_EO_smen_for_EO')
+        arr2.append(N_EO_smen_for_EO)
+        arr1.append(f'N_y_for_EO')
+        arr2.append(N_y_for_EO)
+        arr1.append(f'takt_EO_line')
+        arr2.append(takt_EO_line)
+        arr1.append(f'R_EO_line')
+        arr2.append(R_EO_line)
+        arr1.append(f'm_EO_line')
+        arr2.append(m_EO_line)
+        arr1.append(f'T_voz_EO')
+        arr2.append(T_voz_EO)
+        arr1.append(f'T_EO_year_all')
+        arr2.append(T_EO_year_all)
+
+        arr1.append(f'X_EO_line')
+        arr2.append(X_EO_line)
+        arr1.append(f'fi_for_EO')
+        arr2.append(fi_for_EO)
+
+        arr1.append(f'R_p_EO_line')
+        arr2.append(R_p_EO_line)
+
+    if cars[i].type_vihicle == "автомобили легковые":
+        N_y_for_EO = 60
+        T_voz_EO = 1
+        N_EO_smen_for_EO = N_EO_smen_day[0]
+        fi_for_EO = form.find_fi('EO', cars[i].quantity, modes_EO[1], table_24)
+        takt_EO_line = round(60/N_y_for_EO, 2)
+        R_EO_line = round(60 * (T_voz_EO/(0.7 * N_EO_smen_for_EO)), 2)
+        R_p_EO_line = 2
+        m_EO_line = round(takt_EO_line/R_EO_line)
+        if m_EO_line == 0:
+            m_EO_line = 1
+        X_EO_line = round((T_EO_year[i]*fi_for_EO) /
+                    (DAYS_JOB*modes_EO[2]*n_2_for_EO[0]*modes_EO[1]*R_p_EO_line))
+        if X_EO_line == 0:
+            X_EO_line = 1  
+
+        tmp_for_EO = tmp_for_EO + X_EO_line
+        append_3_2_16(arr_headings_output_2, arr_value_output_2)
+        arr_headings_output_2.append("T_EO_year_legkovik")
+        arr_value_output_2.append(T_EO_year[i])
+    else:
+        N_y_for_EO = 40
+        T_voz_EO = 2.5
+        N_EO_smen_for_EO = sum(N_EO_smen_day) - N_EO_smen_day[0]
+        fi_for_EO = form.find_fi('EO', all_quantity - cars[i].quantity, modes_EO[1], table_24)
+        takt_EO_line = round(60/N_y_for_EO, 2)
+        R_EO_line = round(60 * (T_voz_EO/(0.7 * N_EO_smen_for_EO)), 2)
+        R_p_EO_line = 2
+        m_EO_line = round(takt_EO_line/R_EO_line)
+        if m_EO_line == 0:
+            m_EO_line = 1
+        X_EO_line = round(((T_EO_year_all - T_EO_year[i]) *fi_for_EO) /
+                        (DAYS_JOB*modes_EO[2]*n_2_for_EO[0]*modes_EO[1]*R_p_EO_line))
+        if X_EO_line == 0:
+            X_EO_line = 1
+        tmp_for_EO = tmp_for_EO + X_EO_line
+        append_3_2_16(arr_headings_output_2, arr_value_output_2)
+        arr_headings_output_2.append("T_EO_year_gruzovik")
+        arr_value_output_2.append(T_EO_year_all - T_EO_year[i])
+X_EO_line = tmp_for_EO
+print(X_EO_line)
 
 # TR
 modes_TR = form.days_job_for_TR(DAYS_JOB, table_27)
@@ -841,43 +947,52 @@ F_reg_all = []
 all_sum_sklads = 0
 
 # Расчет площади стоянки
+S_for_F_x = [0 for i in range(LEN_CAR)]
+A_m_hra = [0 for i in range(LEN_CAR)]
+k_pp_or_K_for_F_x = [0 for i in range(LEN_CAR)]
 F_x = [0 for i in range(LEN_CAR)]
-
 for i in range(LEN_CAR):
-    A_m_hra = cars[i].quantity - X_to_1_arr[i] - X_to_2_arr[i] - X_tr_arr[i]
-    k_pp_or_K_for_F_x = 0
+    A_m_hra[i] = cars[i].quantity - X_to_1_arr[i] - X_to_2_arr[i] - X_tr_arr[i]
     if cars[i].metod_keeping == "close":
-        k_pp_or_K_for_F_x = 2
-        F_x[i] = round(S_cars[i] * A_m_hra * k_pp_or_K_for_F_x, 2)
+        S_for_F_x[i] = S_cars[i]
+        k_pp_or_K_for_F_x[i] = 2
+        F_x[i] = round(S_for_F_x[i] * A_m_hra[i] * k_pp_or_K_for_F_x[i], 2)
     else:
         if cars[i].modif_vihicle == "седельные тягачи":
+            k_pp_or_K_for_F_x[i] = 1.4
+            S_for_F_x[i] = 37
+            F_x[i] = round(S_for_F_x[i] * A_m_hra[i] * k_pp_or_K_for_F_x[i], 2)
 
-            k_pp_or_K_for_F_x = 1.4
-            S_tmp = round((cars[i].length + cars[i+1].length) * cars[i].wigth, 2)
-            F_x[i] = round(S_tmp * A_m_hra * k_pp_or_K_for_F_x, 2)
-            arr_headings_output_2.append(f'S_tmp{i}')
-            arr_value_output_2.append(S_tmp)
         else:
-            continue
-    arr_headings_output_2.append(f'A_m_hra{i}')
-    arr_value_output_2.append(A_m_hra)
-    arr_headings_output_2.append(f'k_pp_or_K_for_F_x{i}')
-    arr_value_output_2.append(k_pp_or_K_for_F_x)
+            k_pp_or_K_for_F_x[i] = 1
+            S_for_F_x[i] = 93
+            F_x[i] = round(S_for_F_x[i] * A_m_hra[i] * k_pp_or_K_for_F_x[i], 2)
+
+
 
 F_x_all = sum(F_x)
 
 
 def append_3_2_21(arr1, arr2):
     for i in range(LEN_CAR):
-        arr1.append(f'S_cars{i}')
-        arr2.append(S_cars[i])
+
         arr1.append(f'quantity{i}')
         arr2.append(cars[i].quantity)
+
+        arr1.append(f'S_for_F_x{i}')
+        arr2.append(S_for_F_x[i])
+        arr1.append(f'A_m_hra')
+        arr2.append(A_m_hra[i])
+        arr1.append(f'k_pp_or_K_for_F_x{i}')
+        arr2.append(k_pp_or_K_for_F_x[i])
+
         arr1.append(f'F_x{i}')
         arr2.append(F_x[i])
     arr1.append(f'F_x_all')
     arr2.append(F_x_all)
 append_3_2_21(arr_headings_output_2, arr_value_output_2)
+
+
 
 
 def table_1_1(tables):
@@ -917,6 +1032,7 @@ def table_1_1(tables):
             tables.cell(
                 row=(count_row + len(fractions[i])), column=(3 + i*3)).value = trud
             trud_all = trud_all + trud
+        
         add(trud_all, count_row + len(fractions[i]), 2070, 1820)
         count_row = count_row + len(fractions[i]) + 1
 
@@ -929,7 +1045,7 @@ def table_1_1(tables):
     add(T_D2_year_all, 11, 2070, 1820)
     add(T_D2_year_all, 11, 2070, 1820)
     add(T_vsp, 35, 2070, 1820)
-    T_vsp
+
 def table_1_5(tables):
     tables.cell(row=38, column=1).value = "table_1_5"
     for i in range(len(f_1_f_2_for_regions)):
@@ -956,6 +1072,7 @@ def table_1_6(tables):
         tmp = ""
 
         for j in range(len(f_sklad_k_4)):
+
             F_sklad = round(0.1 * cars[i].quantity * f_sklad_k_4[j][1] *
                             k_1_sklad * k_2_sklad * k_3_sklad * f_sklad_k_4[j][2] * k_5_sklad)
             if F_sklad == 0:
@@ -967,19 +1084,37 @@ def table_1_6(tables):
                     all_sum_sklads = all_sum_sklads + sum(F_sklad_all)
                 else:
                     tmp = tmp + f"{F_sklad} + "
-            else:
-                global F_sklad_vne_proizvod_korp
-                F_sklad_vne_proizvod_korp = F_sklad_vne_proizvod_korp + F_sklad
+            elif f_sklad_k_4[j][0] == "Подлежащие списанию автомобили, агрегаты":
+                global F_sklad_spisaniy_avto
+                F_sklad_spisaniy_avto = F_sklad_spisaniy_avto + F_sklad
+            elif f_sklad_k_4[j][0] == "Кислород и ацетилен в баллонах":
+                global F_sklad_kislorod
+                F_sklad_kislorod = F_sklad_kislorod + F_sklad
             tables.cell(row=102+i, column=1).value = cars[i].name
             tables.cell(row=101, column=2+j).value = f_sklad_k_4[j][0]
             tables.cell(
                 row=102+i, column=2+j).value = f"0.1⋅{cars[i].quantity}⋅{f_sklad_k_4[j][1]}⋅{k_1_sklad}⋅{k_2_sklad}⋅{k_3_sklad}⋅{f_sklad_k_4[j][2]}⋅{k_5_sklad} = {F_sklad}"
+            
+            
+            tables.cell(row=112+i + (j * LEN_CAR) , column=1).value = cars[i].name
+            tables.cell(row=112+i + (j * LEN_CAR) , column=2).value = cars[i].quantity
+            tables.cell(row=112+i + (j * LEN_CAR) , column=3).value = f_sklad_k_4[j][1]
+            tables.cell(row=112+i + (j * LEN_CAR) , column=4).value = k_1_sklad
+            tables.cell(row=112+i + (j * LEN_CAR) , column=5).value = k_2_sklad
+            tables.cell(row=112+i + (j * LEN_CAR) , column=6).value = k_3_sklad
+            tables.cell(row=112+i + (j * LEN_CAR) , column=7).value = f_sklad_k_4[j][2]
+            tables.cell(row=112+i + (j * LEN_CAR) , column=8).value = k_5_sklad
+            tables.cell(row=112+i + (j * LEN_CAR) , column=9).value = F_sklad
             # tables.cell(row=102+j, column=1).value = f_sklad_k_4[j][0]
             # tables.cell(row=102+j, column=2+i).value = f"0.1⋅{cars[i].quantity}⋅{f_sklad_k_4[j][1]}⋅{k_1_sklad}⋅{k_2_sklad}⋅{k_3_sklad}⋅{f_sklad_k_4[j][2]}⋅{k_5_sklad}={F_sklad}"
 
         tables.cell(row=107+i, column=1).value = tmp
     arr_headings_output_2.append("all_sum_sklads")
     arr_value_output_2.append(all_sum_sklads)
+    arr_headings_output_2.append("F_sklad_spisaniy_avto")
+    arr_value_output_2.append(F_sklad_spisaniy_avto)
+    arr_headings_output_2.append("F_sklad_kislorod")
+    arr_value_output_2.append(F_sklad_kislorod)
 def append_tables():
     book = openpyxl.Workbook()
     tables = book.active
@@ -1141,7 +1276,7 @@ for i in range(LEN_CAR):
 P_ud_ne_correct = round(P_proizvod_rab/all_quantity, 2)
 X_ud_ne_correct = round(X_all/all_quantity, 2)
 S_pr_skl_ne_correct = round(
-    (F_proiz_korp+ all_sum_sklads + F_sklad_vne_proizvod_korp)/all_quantity, 2)
+    (F_proiz_korp+ all_sum_sklads + F_sklad_spisaniy_avto)/all_quantity, 2)
 
 S_st_ne_correct = round(sum(F_x)/all_quantity, 2)
 
@@ -1220,7 +1355,7 @@ arr_value_output_3.append(P_proizvod_rab)
 arr_headings_output_3.append(f'X_all')
 arr_value_output_3.append(X_all)
 arr_headings_output_3.append(f'F_proiz_korp+F_sklad_vne_proizvod_korp')
-arr_value_output_3.append(F_proiz_korp+all_sum_sklads+F_sklad_vne_proizvod_korp)
+arr_value_output_3.append(F_proiz_korp+all_sum_sklads+F_sklad_spisaniy_avto)
 arr_headings_output_3.append(f'F_vsp+F_abk+F_kpp')
 arr_value_output_3.append(F_vsp+F_abk+F_kpp)
 arr_headings_output_3.append(f'sum(F_x)')

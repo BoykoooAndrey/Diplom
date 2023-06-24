@@ -6,21 +6,40 @@ import math
 
 # vid_to_tr == 1 - TO-1; 2 - TO-2;  3 - TR
 
+
+# Бессмертный
+# MITSUBISHI_l200 = car.Vehicle("MITSUBISHI L-200", 22, 2.7, 14, 'автомобили легковые',
+#                        'автомобили и автобусы полноприводные', 140, 300000, 5.225, 1.815)
+# kamaz_43118 = car.Vehicle("КАМАЗ-43118", 117, 4, 102, 'автомобили грузовые',
+#                           'базовый автомобиль', 90, 300000, 8.835, 2.5)
+# ural_4320 = car.Vehicle("УРАЛ-4320", 91, 10, 60,
+#                           'автомобили грузовые', 'седельные тягачи', 118, 300000, 7.588, 2.5)
+# cab = car.Vehicle("САВ-931823", 61, 40, 42,
+#                         'полуприцепы тяжеловозы', 'полуприцепы', 130, 250000, 13.540, 2.54)
+# cars = [MITSUBISHI_l200, kamaz_43118, ural_4320, cab]
+# L_g_do_rec=[27896.22, 20123.43, 24679.4, 27984.23]
+# L_g=[31773, 22032, 27983.7, 32155.5]
+# VARIANT = 11
+
+
+#Бойко
 uaz_3163 = car.Vehicle("УАЗ-3163", 29, 2.7, 20, 'автомобили легковые', 'базовый автомобиль', 122.24, 300000, 4.647, 1.929)
 kamaz_43502 = car.Vehicle("КАМАЗ-43502", 124, 4, 105, 'автомобили грузовые', 'базовый автомобиль', 89.85, 300000, 7.570, 2.5)
 kamaz_43118 = car.Vehicle("КАМАЗ-43118", 144, 10, 93, 'автомобили грузовые', 'седельные тягачи', 107, 300000, 8.835, 2.5)
 politrans = car.Vehicle("ПОЛИТРАНС-94163", 61, 40, 32, 'полуприцепы тяжеловозы', 'полуприцепы', 113.01, 250000, 15.130, 2.550)
 cars = [uaz_3163, kamaz_43502, kamaz_43118, politrans]
-LEN_CAR = len(cars)
 L_g_do_rec=[26245.23, 19846.45, 21554.3, 25879.32]
 L_g=[28054.08, 21995.28, 25647.9, 27953.02]
+VARIANT = 10
+
+
+
+LEN_CAR = len(cars)
 for i in range(LEN_CAR):
     L_g_do_rec[i] = L_g_do_rec[i] * cars[i].quantity
     L_g[i] = L_g[i] * cars[i].quantity
-
-
-
 Lg_all_do_rec = sum(L_g_do_rec)
+
 def find_k_3(weather):
     for i in range(18, 24):
         if weather in (table_4[i+1][0].value.split(';')):
@@ -46,7 +65,7 @@ for i in range(LEN_CAR):
     arr_headings_output_tregub.append(f'cars{i}')
     arr_value_output_tregub.append(cars[i].name)
 
-VARIANT = 10
+
 
 vacation_days = 28  # Количество дней отпуска
 calendar_days = 365  # Количество календарных дней
@@ -88,9 +107,13 @@ tarif_4_raz = table_1[VARIANT + 1][5].value
 tarif_5_raz = table_1[VARIANT + 1][6].value
 tarif_6_raz = table_1[VARIANT + 1][7].value
 
+
+
+
 workers_to_1_do_rec = []  # В массиве идет по порядку 3,4,5,6 разряд
 workers_to_2_do_rec = []  # В массиве идет по порядку 3,4,5,6 разряд
 workers_TR_do_rec = []  # В массиве идет по порядку 3,4,5,6 разряд
+
 
 workers_to_1 = []  # В массиве идет по порядку 3,4,5,6 разряд
 workers_to_2 = []  # В массиве идет по порядку 3,4,5,6 разряд
@@ -103,6 +126,55 @@ for i in range(9, 13):
     workers_to_1.append(int(table_2[26][i].value))
     workers_to_2.append(int(table_2[27][i].value))
     workers_TR.append(int(table_2[28][i].value))
+
+for i in range(len(workers_to_1_do_rec)):
+
+    arr_headings_output_tregub.append(f'workers_to_1_do_rec{i}')
+    arr_value_output_tregub.append(workers_to_1_do_rec[i])
+    arr_headings_output_tregub.append(f'workers_to_2_do_rec{i}')
+    arr_value_output_tregub.append(workers_to_2_do_rec[i])
+    arr_headings_output_tregub.append(f'workers_TR_do_rec{i}')
+    arr_value_output_tregub.append(workers_TR_do_rec[i])
+
+    arr_headings_output_tregub.append(f'workers_to_1{i}')
+    arr_value_output_tregub.append(workers_to_1[i])
+    arr_headings_output_tregub.append(f'workers_to_2{i}')
+    arr_value_output_tregub.append(workers_to_2[i])
+    arr_headings_output_tregub.append(f'workers_TR{i}')
+    arr_value_output_tregub.append(workers_TR[i])
+
+arr_headings_output_tregub.append(f'workers_to_1_do_rec')
+arr_value_output_tregub.append(sum(workers_to_1_do_rec))
+arr_headings_output_tregub.append(f'workers_to_2_do_rec')
+arr_value_output_tregub.append(sum(workers_to_2_do_rec))
+arr_headings_output_tregub.append(f'workers_TR_do_rec')
+arr_value_output_tregub.append(sum(workers_TR_do_rec))
+arr_headings_output_tregub.append(f'workers_all_do_rec')
+arr_value_output_tregub.append(sum(workers_to_1_do_rec) + sum(workers_to_2_do_rec) + sum(workers_TR_do_rec))
+
+arr_headings_output_tregub.append(f'workers_to_1')
+arr_value_output_tregub.append(sum(workers_to_1))
+arr_headings_output_tregub.append(f'workers_to_2')
+arr_value_output_tregub.append(sum(workers_to_2))
+arr_headings_output_tregub.append(f'workers_TR')
+arr_value_output_tregub.append(sum(workers_TR))
+arr_headings_output_tregub.append(f'workers_all')
+arr_value_output_tregub.append(sum(workers_to_1) + sum(workers_to_2) + sum(workers_TR))
+
+workers_raz_do_rec = []  
+workers_raz = []
+for i in range(4):
+    workers_raz_do_rec.append(workers_to_1_do_rec[i] + workers_to_2_do_rec[i] + workers_TR_do_rec[i])
+    arr_headings_output_tregub.append(f'workers_raz_do_rec{i}')
+    arr_value_output_tregub.append(workers_raz_do_rec[i])
+
+    workers_raz.append(workers_to_1[i] + workers_to_2[i] + workers_TR[i])
+    arr_headings_output_tregub.append(f'workers_raz{i}')
+    arr_value_output_tregub.append(workers_raz[i])
+
+
+
+
 
 sred_tarif_to_1_do_rec = round((workers_to_1_do_rec[0] * tarif_3_raz + workers_to_1_do_rec[1] *
                          tarif_4_raz + workers_to_1_do_rec[2] * tarif_5_raz + workers_to_1_do_rec[3] * tarif_6_raz) / sum(workers_to_1_do_rec), 2)
@@ -120,15 +192,13 @@ sred_tarif_tr = round((workers_TR[0] * tarif_3_raz + workers_TR[1] *
 
 # 2.2 Определение заработной платы ремонтных рабочих по тарифу по видам воздействий
 # 2.2.1 Фонд заработной платы ремонтных рабочих
-T_to_1_do_rec = float(table_1[VARIANT + 1][19].value)
-T_to_2_do_rec = float(table_1[VARIANT + 1][20].value)
-T_tr_do_rec = float(table_1[VARIANT + 1][21].value)
+T_to_1_do_rec = float(table_1[VARIANT + 1][20].value)
+T_to_2_do_rec = float(table_1[VARIANT + 1][21].value)
+T_tr_do_rec = float(table_1[VARIANT + 1][19].value)
 
 T_to_1 = float(table_1[VARIANT + 1][2].value)
 T_to_2 = float(table_1[VARIANT + 1][3].value)
 T_tr = float(table_1[VARIANT + 1][1].value)
-
-
 
 FZP_to_1_do_rec = round(sred_tarif_to_1_do_rec*T_to_1_do_rec*1.5*2.2, 2)
 FZP_to_2_do_rec = round(sred_tarif_to_2_do_rec*T_to_2_do_rec*1.5*2.2, 2)
@@ -356,7 +426,6 @@ def append_2_1():
     arr_value_output_tregub.append(sred_tarif_tr)
 append_2_1()
 
-
 Z_naklad_to_1_do_rec = round(OFZP_all_with_otc_to1_do_rec * 0.5, 2)
 Z_naklad_to_2_do_rec = round(OFZP_all_with_otc_to2_do_rec * 0.5, 2)
 Z_naklad_tr_do_rec = round(OFZP_all_with_otc_tr_do_rec * 0.5, 2)
@@ -364,6 +433,7 @@ Z_naklad_tr_do_rec = round(OFZP_all_with_otc_tr_do_rec * 0.5, 2)
 Z_naklad_to_1 = round(OFZP_all_with_otc_to1 * 0.5, 2)
 Z_naklad_to_2 = round(OFZP_all_with_otc_to2 * 0.5, 2)
 Z_naklad_tr = round(OFZP_all_with_otc_tr * 0.5, 2)
+
 # 3.6. Затраты на расходные материалы и запасные части для ремонтной зоны
 def find_H_m(TYPE_VEHICLE, vid_to_tr):
     if TYPE_VEHICLE == 'автомобили легковые':
@@ -403,7 +473,9 @@ Z_zch_all = []
 
 for i in range(LEN_CAR):
     if cars[i].modif_vihicle == 'седельные тягачи':
-        k_2 = 1.05
+        k_2 = 1.1
+    elif cars[i].modif_vihicle == 'автомобили и автобусы полноприводные':
+        k_2 = 1.25
     else:
         k_2 = 1
     
@@ -503,13 +575,21 @@ append_3()
 
 # 7.4. Затраты на приобретение оборудования
 zatrati_na_new_oborud = round(table_1[VARIANT + 1][45].value, 2)
-Z_mont_dem_trans = round(zatrati_na_new_oborud * 0.25, 2)
-zatrati_na_new_oborud_with_mont = zatrati_na_new_oborud + Z_mont_dem_trans
+Z_demont_oborud = round(zatrati_na_new_oborud * 0.05, 2)
+Z_mont_oborud = round(zatrati_na_new_oborud * 0.15, 2)
+Z_trans_oborud = round(zatrati_na_new_oborud * 0.05, 2)
+
+zatrati_na_new_oborud_with_mont = zatrati_na_new_oborud + Z_demont_oborud + Z_mont_oborud + Z_trans_oborud
 def append_7():
     arr_headings_output_tregub.append('zatrati_na_new_oborud')
     arr_value_output_tregub.append(zatrati_na_new_oborud)
-    arr_headings_output_tregub.append('Z_mont_dem_trans')
-    arr_value_output_tregub.append(Z_mont_dem_trans)
+    arr_headings_output_tregub.append('Z_demont_oborud')
+    arr_value_output_tregub.append(Z_demont_oborud)
+    arr_headings_output_tregub.append('Z_mont_oborud')
+    arr_value_output_tregub.append(Z_mont_oborud)
+    arr_headings_output_tregub.append('Z_trans_oborud')
+    arr_value_output_tregub.append(Z_trans_oborud)
+
     arr_headings_output_tregub.append('zatrati_na_new_oborud_with_mont')
     arr_value_output_tregub.append(zatrati_na_new_oborud_with_mont)
 append_7()
@@ -639,7 +719,7 @@ def table_6_0(tables):
     tables.cell(row=7, column=4).value = round((Z_naklad_to_1 / T_to_1), 2)
     tables.cell(row=8, column=4).value = round((OFZP_to1 +  SOC_OTC_to1 +  sum(Z_mat_to_1_all) + Z_naklad_to_1) / T_to_1, 2)
 
-    tables.cell(row=9, column=1).value = "table 6_0_0"
+    tables.cell(row=9, column=1).value = "ТО-1 после рек"
 
     tables.cell(row=4, column=5).value = OFZP_to1_do_rec
     tables.cell(row=5, column=5).value = SOC_OTC_to1_do_rec
@@ -665,7 +745,7 @@ def table_6_0(tables):
     tables.cell(row=7, column=8).value = round((Z_naklad_to_1_do_rec / T_to_1_do_rec), 2)
     tables.cell(row=8, column=8).value = round((OFZP_to1_do_rec +  SOC_OTC_to1_do_rec +  sum(Z_mat_to_1_all_do_rec) + Z_naklad_to_1_do_rec) / T_to_1_do_rec, 2)
 
-    tables.cell(row=9, column=5).value = "table 6_0_1"
+    tables.cell(row=9, column=5).value = "ТО-1 до рек"
 
 def table_6_1(tables):
     tables.cell(row=11, column=1).value = OFZP_to2
@@ -692,7 +772,7 @@ def table_6_1(tables):
     tables.cell(row=14, column=4).value = round(((Z_naklad_to_2) / T_to_2), 2)
     tables.cell(row=15, column=4).value = round((OFZP_to2 + SOC_OTC_to2 + sum(Z_mat_to_2_all) + Z_naklad_to_2) / T_to_2, 2)
 
-    tables.cell(row=16, column=5).value = "table 6_1_0"
+    tables.cell(row=16, column=1).value = "ТО-2 после рек"
 
     tables.cell(row=11, column=5).value = OFZP_to2_do_rec
     tables.cell(row=12, column=5).value = SOC_OTC_to2_do_rec
@@ -718,7 +798,7 @@ def table_6_1(tables):
     tables.cell(row=14, column=8).value = round(((Z_naklad_to_2_do_rec) / T_to_2_do_rec), 2)
     tables.cell(row=15, column=8).value = round((OFZP_to2_do_rec + SOC_OTC_to2_do_rec + sum(Z_mat_to_2_all_do_rec) + Z_naklad_to_2_do_rec) / T_to_2_do_rec, 2)
 
-    tables.cell(row=16, column=5).value = "table 6_1_1"
+    tables.cell(row=16, column=5).value = "ТО-2 до рек"
 
 def table_6_2(tables):
     tables.cell(row=17, column=1).value = OFZP_tr
@@ -742,7 +822,7 @@ def table_6_2(tables):
     tables.cell(row=21, column=3).value = round((Z_naklad_tr / T_tr), 2)
     tables.cell(row=22, column=3).value = round((OFZP_tr + SOC_OTC_tr + sum(Z_mat_tr_all) + sum(Z_zch_all) + Z_naklad_tr) / T_tr, 2)
 
-    tables.cell(row=23, column=1).value = "table 6_2_0"
+    tables.cell(row=23, column=1).value = "ТР после рек"
 
     tables.cell(row=17, column=5).value = OFZP_tr_do_rec
     tables.cell(row=18, column=5).value = SOC_OTC_tr_do_rec
@@ -765,7 +845,7 @@ def table_6_2(tables):
     tables.cell(row=21, column=7).value = round((Z_naklad_tr_do_rec / T_tr_do_rec), 2)
     tables.cell(row=22, column=7).value = round((OFZP_tr_do_rec + SOC_OTC_tr_do_rec + sum(Z_mat_tr_all_do_rec) + sum(Z_zch_all_do_rec) + Z_naklad_tr_do_rec) / T_tr_do_rec, 2)
 
-    tables.cell(row=23, column=1).value = "table 6_2_0"
+    tables.cell(row=23, column=5).value = "ТР до рек"
 
 def append_tables():
     book = openpyxl.Workbook()
